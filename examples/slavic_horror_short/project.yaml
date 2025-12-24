@@ -1,0 +1,58 @@
+title: "Village of Ashes"
+genre: "Slavic Horror"
+tone: "slow-burn, folklore-rooted"
+format: "short"
+target_runtime_minutes: 12
+languages: ["en", "uk"]
+
+pipeline_stages:
+  - script_dev
+  - previs
+  - visuals
+  - audio
+  - assemble
+
+# Script development settings
+script_dev:
+  prompt_ref: "prompts/genres/slavic_horror/scene_seed.md"
+  logline_variants: 3
+  outline_depth: "scene"
+  model: "text-model-placeholder"
+  deterministic_seed: 42
+
+# Previsualization settings
+previs:
+  shot_style: "long-take, low-angle"
+  storyboard_style: "grayscale, high-contrast"
+  animatic_frame_rate: 12
+
+# Visual generation preferences
+visuals:
+  track: "stylized_video"
+  model: "video-model-placeholder"
+  scene_config_template: "templates/scene_config.yaml"
+  render_settings:
+    guidance_scale: 7.5
+    num_inference_steps: 20
+
+# Audio settings
+audio:
+  voice_preset: "villager_elder"
+  sfx_packs:
+    - "wind_forest"
+    - "underground_drone"
+  music_style: "droning ritual chant"
+
+# Safety & review
+safety:
+  content_warnings:
+    - "mature themes"
+    - "disturbing imagery"
+  culture_review_required: true
+
+# Metadata
+metadata:
+  owner: "ai-movie-studio/examples"
+  contact: "maintainers@your-org.example"
+  repository: "https://github.com/your-org/ai-movie-studio"
+  created_at: "2025-12-23T00:00:00Z"

@@ -1,0 +1,96 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Project configuration schema
+type: object
+required:
+  - title
+  - genre
+  - format
+  - pipeline_stages
+properties:
+  title:
+    type: string
+  genre:
+    type: string
+  tone:
+    type: string
+  format:
+    type: string
+    enum: [short, feature, episodic]
+  target_runtime_minutes:
+    type: integer
+    minimum: 1
+  languages:
+    type: array
+    items:
+      type: string
+  pipeline_stages:
+    type: array
+    items:
+      type: string
+      enum: [script_dev, previs, visuals, audio, assemble]
+    minItems: 1
+  script_dev:
+    type: object
+    properties:
+      prompt_ref:
+        type: string
+      logline_variants:
+        type: integer
+      outline_depth:
+        type: string
+      model:
+        type: string
+      deterministic_seed:
+        type: integer
+  previs:
+    type: object
+    properties:
+      shot_style:
+        type: string
+      storyboard_style:
+        type: string
+      animatic_frame_rate:
+        type: integer
+  visuals:
+    type: object
+    properties:
+      track:
+        type: string
+      model:
+        type: string
+      scene_config_template:
+        type: string
+      render_settings:
+        type: object
+  audio:
+    type: object
+    properties:
+      voice_preset:
+        type: string
+      sfx_packs:
+        type: array
+        items:
+          type: string
+      music_style:
+        type: string
+  safety:
+    type: object
+    properties:
+      content_warnings:
+        type: array
+        items:
+          type: string
+      culture_review_required:
+        type: boolean
+  metadata:
+    type: object
+    properties:
+      owner:
+        type: string
+      contact:
+        type: string
+      repository:
+        type: string
+      created_at:
+        type: string
+additionalProperties: true

@@ -1,5 +1,11 @@
-AI Movie Studio
-AI Movie Studio is a reference architecture and open toolkit for AI‑assisted movie production — from idea to script, storyboard, visuals, audio, and final assembly. It supports any genre, with a specialization track for horror and Slavic‑horror storytelling.
+# ai-movie-studio — AI Movie‑Production Reference Architecture 🎬🤖
+
+[![Status: Draft](https://img.shields.io/badge/status-draft-yellow)](#)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](#)
+[![Build](https://img.shields.io/badge/build-ci--pipeline-pending)](#)
+[![Coverage](https://img.shields.io/badge/coverage-tbd-lightgrey)](#)
+
+A reference architecture and open-source starter kit for AI‑assisted film production — from idea to animatic, to AI‑generated visuals and audio. Designed for studios, tool builders, and indie creators, with a **specialization** in horror and Slavic‑horror that can be extended to any genre.[web:7][web:8]
 ​
 
 Vision
@@ -9,126 +15,146 @@ Give studios, indie teams, and tool builders a modular blueprint for AI‑first 
 Let humans stay in charge creatively while AI handles repetitive craft: drafts, boards, animatics, rough cuts, and soundbeds.
 ​
 
-Provide reusable prompt libraries, pipelines, and file structures that investors and producers can inspect, extend, or productize.
+---
+
+## Table of Contents 📚
+
+- [Why this repo?](#why-this-repo-)
+- [Project overview](#project-overview-)
+- [Repository layout](#repository-layout-)
+- [Core pipelines](#core-pipelines-)
+- [Specialization: Horror & Slavic-horror](#specialization-horror--slavic-horror-)
+- [Prompt packs & co‑creation](#prompt-packs--co-creation-)
+- [Tools & integrations](#tools--integrations-)
+- [Quickstart](#quickstart-)
+- [Security & Responsible AI](#security--responsible-ai-)
+- [Contributing & Code of Conduct](#contributing--code-of-conduct-)
+- [License & attribution](#license--attribution-)
+- [References](#references-)
+
+---
+
+## Why this repo? 💡
+
+`ai-movie-studio` aims to provide an industry‑ready, auditable pipeline for AI‑assisted production workflows, mapping closely to real film studio stages.[web:7][web:8] It focuses on making AI a creative amplifier rather than a replacement, keeping humans in the loop for direction, curation, and final approval.[web:7][web:11]
+
+Key goals:
+
+- Prototype end‑to-end AI‑generated shorts quickly (script → storyboard → animatic → visuals → audio).[web:7][web:8]  
+- Offer reference integrations into emerging open-source film automation and video generation projects.[web:7][web:8]  
+- Provide reusable patterns for genre‑specific customization, starting with horror and Slavic‑horror.  
 ​
 
-Repository Structure
-text
-ai-movie-studio/
-├── README.md
-├── LICENSE
-├── docs/
-├── prompts/
-├── scripts/
-├── pipeline/
-├── audio/
-├── assets/
-├── tools/
-├── templates/
-└── examples/
-High‑level:
+## Repository layout 🗂️
+This layout is **aspirational**; create only the folders you actually use and adjust as the project matures.
+
+- `docs/` — architecture diagrams, stakeholder docs (e.g., `ARCHITECTURE.md`, `FOR_STUDIOS.md`, `HORROR_SPECIALIZATION.md`).  
+- `prompts/` — curated prompt libraries, including `prompts/genres/slavic_horror/` for folklore‑driven horror.  
+- `scripts/` — CLIs and helper scripts (e.g., `scripts/cli.py`) to run pipelines end‑to‑end.  
+- `pipeline/` — core pipeline modules, e.g.:
+  - `pipeline/script_dev/`
+  - `pipeline/previs/`
+  - `pipeline/visuals/`
+- `audio/` — TTS, SFX, and music pipelines plus DAW template references.  
+- `tools/` — adapters for external models/services (e.g., `filmagent_adapter/`, `video_generation_adapter/`).[web:7][web:8]  
+- `templates/` — project YAML specs, scene configs, and CI templates.  
+- `examples/` — runnable projects like `examples/slavic_horror_short/` with `REPORT.md` explaining human/AI roles.  
 
 docs/ – architecture, studio/investor docs, horror specialization notes.
 ​
 
-prompts/ – prompt packs for scripts, worldbuilding, visuals, audio, and genre kits (incl. Slavic‑horror).
+See the `Repository layout` section above for folder purposes.
 ​
 
-scripts/ – orchestration code linking models and services.
+See the `Repository layout` section above for folder purposes.
 ​
 
-pipeline/ – end‑to‑end pipelines for idea→script→boards→video.
+See the `Repository layout` section above for folder purposes.
 
-audio/ – structured audio pipelines (dialogue, SFX, music, DAW templates).
+See the `Repository layout` section above for folder purposes.
 ​
 
-assets/ – example frames, LUTs, non‑copyright sample audio.
+See the `Repository layout` section above for folder purposes.
 
-tools/ – adapters for external AI systems (video, TTS, script tools).
+See the `Repository layout` section above for folder purposes.
 ​
 
-templates/ – YAML/JSON project specs, audio routing, reporting templates.
+See the `Repository layout` section above for folder purposes.
 
-examples/ – complete sample projects (e.g., an AI Slavic‑horror short).
+See the `Repository layout` section above for folder purposes.
 
 Core Pipelines
 1. Idea → Script
-Folder: pipeline/script_dev/
+Location: `pipeline/script_dev/`
 
 Modules:
 
-idea_to_logline/ – takes a loose concept, generates multiple loglines/synopses across tones and genres.
+- `idea_to_logline/` — generate multiple logline variants per genre (Slavic‑horror, psychological horror, etc.).  
 ​
 
-outline_generator/ – builds act structure and scene beats, with options for slow‑burn horror escalation.
+- `outline_generator/` — build scene‑by‑scene outlines and escalation curves.  
 
-screenplay_builder/ – transforms outlines into Fountain/FDX scripts via AI and formatting rules.
+- `screenplay_builder/` — export to formats like Fountain or Final Draft XML based on templates.[web:10]  
 ​
 
-coverage_tools/ – AI coverage: logline, synopsis, comps, strengths/risks for producers.
+- `coverage_tools/` — automated coverage reports (logline, synopsis, comps, risks).  
 ​
 
-Example config:
+Example project spec: `templates/script_project.yaml` (title, genre, tone, constraints, target runtime).
+### 2) Script → Storyboard → Shot list 🎞️
+Location: `pipeline/previs/`
 
-text
-# templates/script_project.yaml
-title: "Working Title"
-genre: "Slavic Horror"
-tone: "slow-burn, psychological, folklore-rooted"
-format: "feature"
-target_runtime_minutes: 100
-languages: ["en", "uk"]
-2. Script → Storyboards & Shot Lists
-Folder: pipeline/previs/
+- `scene_breakdown/` — parse script into scenes, beats, characters, and horror motifs.  
 
-scene_breakdown/ – parses scripts into scenes, locations, characters, and horror beats.
-
-shot_planner/ – proposes shot sizes, camera movement, and transitions via multi‑agent planners.
+- `shot_planner/` — propose camera setups, lenses, and movements per shot.  
 ​
 
-image_stub_generator/ – rough storyboard frames using image models; configurable styles.
+- `image_stub_generator/` — generate grayscale keyframes or style studies via diffusion/video‑image models.[web:8]  
 ​
 
-animatic_builder/ – assembles storyboards + temp audio into animatics.
+- `animatic_builder/` — assemble frames + temp audio into animatics (MP4).  
 ​
 
-Outputs:
+Typical outputs:
 
-shotlist.csv
+- `shotlist.csv`
+- `storyboard/scene_##/shot_##.png`
+- `animatic/scene_##.mp4`  
 
-storyboards/scene_##/shot_##.png
-
-animatic/scene_##.mp4
-
-3. Visual Generation (Animated / Stylized)
-Folder: pipeline/visuals/
+### 3) Visual generation 🎨
+Location: `pipeline/visuals/`
 
 Tracks:
 
-animated_2d/ – 2D animated pipeline from script + boards to AI‑assisted frames.
+- `animated_2d/` — keyframes → tweening → renders.  
 
-stylized_video/ – uses video generation models (Open‑Sora‑like) to render shot‑conditioned clips.
+- `stylized_video/` — text/shot‑conditioned video generation (Open‑Sora‑style).[web:8]  
 ​
 
-3d_virtual_film/ – hooks into virtual production agents to place cameras and performers.
+- `3d_virtual_film/` — virtual camera + environment placement, inspired by multi‑agent virtual film systems.[web:7]  
 ​
 
-Each scene:
+Each scene may use:
 
-text
-# pipeline/visuals/scene_config.yaml
-scene_id: 12
-style: "grainy, fog-drenched Eastern European village"
-model: "video_model_alias"
-duration_seconds: 20
-camera_style: "slow dolly, 35mm, low angle"
-4. Audio Production Pipelines
-Folder: audio/
+- `scene_config.yaml` — model selection, prompts, seeds, style constraints.  
+- `render_queue.json` — batch render plan for scenes/shots.  
+### 4) Audio & music 🔊
+Location: `audio/`
 
 Sub‑pipelines:
 
-4.1 Dialogue & Voice
-TTS / voice‑cloning configs for characters and narrator.
+- `voice/` — TTS and voice‑cloning configs for characters and narration.
+  - Language and accent presets (including Eastern European voices).  
+
+  Examples:
+  ```
+  audio/voice/
+  ├── configs/
+  │   ├── villager_elder.json
+  │   ├── possessed_child.json
+  │   └── narrator_calm_ukrainian.json
+  └── tts_dialogue_pipeline.py
+  ```
 ​
 
 Language and accent presets (including Eastern European voices).
@@ -142,91 +168,78 @@ audio/voice/
 │   ├── possessed_child.json
 │   └── narrator_calm_ukrainian.json
 └── tts_dialogue_pipeline.py
-4.2 SFX & Atmospheres
+- `sfx/` — procedural or AI‑assisted SFX generation (winds, drones, creaks).
 AI tools for atmospheres, drones, impacts; can batch‑render asset lists.
 ​
 
 Organized libraries:
 
-text
+```
 audio/libraries/
 ├── atmospheres/
 │   ├── wind_forest_night.wav
 │   ├── underground_drone_01.wav
 ├── impacts/
 └── rituals/
-4.3 Music & Score
+```
+- `music/` — AI composition templates and stems for DAW workflows.[web:9]
 Prompt recipes for generating underscore, themes, and ritual motifs.
 
 Notebooks and scripts exporting stems per instrument into DAWs.
 
-Templates:
+Templates and notebooks for exporting stems into DAWs (e.g., Reaper, Ableton, Pro Tools).
 
-text
-audio/templates/
-├── reaper_project_template.rpp
-├── ableton_set_template.als
-└── protools_session_template.ptx
-Pipeline docs: audio/docs/PIPELINE_AUDIO.md walks through:
+Pipeline docs: `audio/docs/PIPELINE_AUDIO.md` walks through:
 
-Generate AI dialogue.
+1. Generate AI dialogue.
+2. Apply horror FX chains.
+3. Layer atmospheres and drones.
+4. Export stems for human mixing.
 
-Apply horror FX chains.
-
-Layer atmospheres and drones.
-
-Export stems for human mixing.
-
-Tools & External Integrations
-Folder: tools/
+## Tools & integrations 🔌
+Adapters in `tools/` provide thin, testable interfaces to external systems.[web:7][web:8]
 
 Examples:
 
-filmagent_adapter/ – sample integration with multi‑agent film frameworks.
+- `tools/filmagent_adapter/` — bridge to FilmAgent‑style multi‑agent virtual film workflows.[web:7]  
 ​
 
-hitchcock_adapter/ – adapter illustrating Hitchcock‑style AI movie makers.
+- `tools/hitchcock_adapter/` — experimental multi‑agent script→shot pipelines inspired by hackathon projects.[web:9]  
 ​
 
-video_generation_adapter/ – plugs into Open‑Sora‑like models for scripted shots.
+- `tools/video_generation_adapter/` — interface for Open‑Sora‑like video generators.[web:8]  
 ​
 
-audiostack_adapter/ – calls into AI audio production platforms.
+- `tools/audio_stack_adapter/` — script→voiceover/SFX/music orchestration.  
 ​
 
-scriptgen_adapter/ – connects to AI script services for iterative writing.
+- `tools/scriptgen_adapter/` — optional integration with third‑party script tools.  
 ​
 
-Each includes:
+Each adapter should ship with:
 
-README.md – what, why, and usage.
+- Its own `README.md`  
+- Example config (e.g., `config.example.yaml`)  
+- CLI entry point (e.g., `cli.py`)  
 
-config.example.json – endpoints/keys layout.
-
-cli.py – quick test/run scripts.
-
-Prompt Libraries (for Humans + AI)
+## Prompt packs & co‑creation 📝
 Folder: prompts/
 
-Subfolders:
+Suggested structure:
 
-scripts/ – logline → outline → scene prompts.
+- `prompts/scripts/` — loglines, beats, scene prompts, character bios.  
+- `prompts/genres/slavic_horror/` — specialized seeds like `slavic_horror_short/scene_seed.md`.  
+- `prompts/assistants/` — role‑based agents (script doctor, editor, composer, producer).  
 
-characters/ – archetype builders.
+Example ready‑made pack:
 
-worldbuilding/ – lore, rules, and consistency helpers.
+- `prompts/genres/slavic_horror/slavic_horror_short/`  
+  - `scene_seed.md`  
+  - `visual_style.md`  
+  - `sound_design.md`  
+  - `safety_and_taboos.md`  
 
-audio/ – prompts for voice tone, SFX, and score.
-
-genres/ – genre‑specific packs:
-
-text
-prompts/genres/
-├── slavic_horror/
-├── psychological_horror/
-├── dark_fantasy/
-├── sci_fi_epic/
-└── animated_family/
+These packs should define: input expectations, output schema, and example completions for reproducibility.[web:6]
 Example: prompts/genres/slavic_horror/scene_seed.md (already sketched in prior message) guides creation of quiet, dread‑heavy scenes.
 
 Assistant prompts (prompts/assistants/):
@@ -242,31 +255,17 @@ marketing_trailer_ideas.md – trailer beats, loglines, taglines.
 These show how humans collaborate with AI, not get replaced by it.
 ​
 
-Examples for Producers & Investors
+## Example projects 🎞️
 Folder: examples/
 
-slavic_horror_short/ – complete micro‑production:
+- `examples/slavic_horror_short/` — complete micro‑production with `project.yaml`, `script.fountain`, `shotlist.csv`, `storyboards/`, `renders/`, `audio_mix/`, and `REPORT.md` that documents timeline, tools used, and human touchpoints.
 
-project.yaml
-
-script.fountain
-
-shotlist.csv
-
-storyboards/
-
-renders/
-
-audio_mix/
-
-REPORT.md – timeline, tools used, human touchpoints.
-
-ai_animated_trailer/ – 30‑second AI‑heavy teaser demonstrating full automation potential.
+- `examples/ai_animated_trailer/` — a 30‑second AI‑heavy teaser demonstrating a high‑automation pipeline.
 
 These reference builds are designed explicitly so major studios and investors can see concrete outputs and evaluate where to plug into their own pipelines.
 ​
 
-Documentation
+## Documentation 📚
 Folder: docs/
 
 Recommended:
@@ -280,16 +279,43 @@ FOR_INVESTORS.md – cost‑saving areas, scalable content formats.
 
 HORROR_SPECIALIZATION.md – why horror/Slavic‑horror is emphasized; best‑practice prompts, audio styling.
 
-Contributing
-Contributions welcome for:
+Contributions are welcome, especially from filmmakers, technologists, and researchers working on AI‑assisted production.
 
-New genre prompt packs.
+Suggested files:
 
-Additional pipeline modules (e.g., live‑action pre‑vis).
+- `CONTRIBUTING.md`
+  - How to propose changes and open PRs.  
+  - Coding standards, testing expectations, and documentation requirements.  
+  - Guidelines for logging prompts, seeds, and human decision points in `REPORT.md`.  
+- `CODE_OF_CONDUCT.md`
+  - Expected behavior and anti‑harassment policies based on a standard template (e.g., Contributor Covenant).  
 
-New adapters for emerging AI video/audio tools.
+Contributor expectations:
 
-See docs/CONTRIBUTING.md for style guidelines and safety policies.
+- Prefer small, well‑scoped PRs.  
+- Include/update `REPORT.md` for new `examples/` explaining human vs. AI contributions.  
+- Add or update tests for any pipeline or adapter changes.  
 
-License
-Specify a permissive license (e.g., MIT/Apache‑2.0) or a more controlled license if you want to steer commercial forks. Clarify model/API usage terms where external services are required.
+## License & attribution 📜
+
+**Suggested license:** Apache 2.0, to support wide reuse while providing explicit patent grants and contributor protections.[web:8]  
+
+Action items:
+
+- Add `LICENSE` with Apache‑2.0 text.  
+- Add `THIRD_PARTY.md` to list:
+  - External models and datasets.  
+  - Libraries and tools (FilmAgent, Open‑Sora, etc.) with links and licenses.[web:7][web:8]  
+
+Users remain responsible for complying with all third‑party licenses and local regulations when deploying or commercializing derivative works.
+
+---
+
+## References 🔗
+
+Some related projects and resources that inspired this architecture:
+
+- FilmAgent — multi‑agent virtual film automation in 3D spaces: https://github.com/HITsz-TMG/FilmAgent[web:7][web:11]  
+- Open‑Sora — open video generation stack: https://github.com/hpcaitech/Open-Sora[web:8]  
+- Hitchcock‑style multi‑agent storytelling: hackathon write‑up — https://elevenlabs-worldwide-hackathon.devpost.com/submissions/621602-lossfunk[web:9]  
+- General guidance on crafting AI‑friendly READMEs — https://benhouston3d.com/blog/crafting-readmes-for-ai[web:6]  
